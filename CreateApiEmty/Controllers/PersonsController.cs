@@ -57,8 +57,8 @@ namespace CreateApiEmty.Controllers
         }
 
         // POST api/<PersonController>
-        [HttpPost]
-        public async Task<ActionResult<Person>> Post(Person person)
+        [HttpPost("addperson")]
+        public async Task<ActionResult<Person>> Post([FromBody] Person person)
         {
             if (person == null)
             {
@@ -71,7 +71,7 @@ namespace CreateApiEmty.Controllers
 
         // PUT api/<PersonController>/5
         [HttpPut("{id}")]
-        public async Task<ActionResult<Person>> Put(Person person)
+        public async Task<ActionResult<Person>> Put([FromBody] Person person)
         {
             if (person == null)
             {
@@ -87,17 +87,17 @@ namespace CreateApiEmty.Controllers
         }
 
         // DELETE api/<PersonController>/5
-        [HttpDelete("{id}")]
+        [HttpDelete("deleteperson/{id}")]
         public async Task<ActionResult<Person>> Delete(int id)
         {
-            Person person = dbContext.Persons.FirstOrDefault(x => x.Id == id);
-            if (person == null)
+            Person person1 = dbContext.Persons.FirstOrDefault(x => x.Id == id);
+            if (person1 == null)
             {
                 return NotFound();
             }
-            dbContext.Persons.Remove(person);
+            dbContext.Persons.Remove(person1);
             await dbContext.SaveChangesAsync();
-            return Ok(person);
+            return Ok(person1);
         }
     }
 }

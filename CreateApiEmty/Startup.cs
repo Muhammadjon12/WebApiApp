@@ -8,15 +8,26 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Net.Http.Headers;
 using Microsoft.Net.Http.Headers;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+
 
 namespace CreateApiEmty
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+        public Startup(IConfiguration configuration)
+        {
+          Configuration =  configuration;
+        }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+        [System.Obsolete]
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSignalR();
             string con = "Server=(localdb)\\mssqllocaldb;Database=usersdbstore;Trusted_Connection=True;MultipleActiveResultSets=true";
             string conn = "Server=(localdb)\\mssqllocaldb;Database=Persons;Trusted_Connection=True;MultipleActiveResultSets=true";
 
@@ -51,7 +62,7 @@ namespace CreateApiEmty
                 endpoints.MapControllers();
             });
 
-
+         
         }
     }
 }
